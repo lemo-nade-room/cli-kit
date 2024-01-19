@@ -7,7 +7,14 @@ public struct Application: Sendable {
 
   public var asyncCommands: AsyncCommands
 
-  public init(commands: Commands = .init(), asyncCommands: AsyncCommands = .init()) {
+  public var console: any Console
+
+  public init(
+    console: any Console = Terminal(),
+    commands: Commands = .init(),
+    asyncCommands: AsyncCommands = .init()
+  ) {
+    self.console = console
     self.commands = commands
     self.asyncCommands = asyncCommands
   }
@@ -20,8 +27,8 @@ public struct Application: Sendable {
     ).group()
 
     let commandInput = CommandInput(arguments: arguments)
-    let console: some Console = Terminal()
-    let context = CommandContext(console: console, input: commandInput)
+    var context = CommandContext(console: console, input: commandInput)
+    context.application = self
     try await console.run(combinedCommands, with: context)
   }
 }
