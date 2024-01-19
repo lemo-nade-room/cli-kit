@@ -6,7 +6,7 @@ import XCTest
 final class ApplicationTests: XCTestCase {
   func test_command_can_be_called() async throws {
     // Arrange
-    var app = Application()
+    var app = Application(env: .testing)
 
     final class CallCommand: Command, @unchecked Sendable {
       struct Signature: CommandSignature {}
@@ -29,7 +29,7 @@ final class ApplicationTests: XCTestCase {
 
   func test_async_command_can_be_called() async throws {
     // Arrange
-    var app = Application()
+    var app = Application(env: .testing)
 
     actor CallCommand: AsyncCommand {
       var called: Bool = false
