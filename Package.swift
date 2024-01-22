@@ -19,6 +19,8 @@ let package = Package(
     .package(url: "https://github.com/vapor/fluent.git", from: "4.9.0"),
     // 🪶 Fluent driver for SQLite.
     .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.0.0"),
+    // Swift Command
+    .package(url: "https://github.com/Zollerboy1/SwiftCommand.git", from: "1.4.0"),
   ],
   targets: [
     // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -28,6 +30,7 @@ let package = Package(
       dependencies: [
         .product(name: "Vapor", package: "vapor"),
         .product(name: "Fluent", package: "fluent"),
+        .product(name: "SwiftCommand", package: "SwiftCommand"),
       ]
     ),
     .testTarget(
