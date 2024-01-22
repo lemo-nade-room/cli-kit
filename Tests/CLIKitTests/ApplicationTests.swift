@@ -1,4 +1,5 @@
 import ConsoleKit
+import Vapor
 import XCTest
 
 @testable import CLIKit
@@ -6,7 +7,10 @@ import XCTest
 final class ApplicationTests: XCTestCase {
   func test_command_can_be_called() async throws {
     // Arrange
-    var app = Application(env: .testing)
+    var env: Environment = .testing
+    env.commandInput = CommandInput(arguments: ["<endpoint>", "call"])
+    let app = Application(env)
+    defer { app.shutdown() }
 
     final class CallCommand: Command, @unchecked Sendable {
       struct Signature: CommandSignature {}
@@ -21,7 +25,7 @@ final class ApplicationTests: XCTestCase {
     app.commands.use(command, as: "call")
 
     // Act
-    try await app.execute(arguments: ["<endpoint>", "call"])
+    try await app.cliKit()
 
     // Assert
     XCTAssertTrue(command.called)
@@ -29,7 +33,10 @@ final class ApplicationTests: XCTestCase {
 
   func test_async_command_can_be_called() async throws {
     // Arrange
-    var app = Application(env: .testing)
+    var env: Environment = .testing
+    env.commandInput = CommandInput(arguments: ["<endpoint>", "call"])
+    let app = Application(env)
+    defer { app.shutdown() }
 
     actor CallCommand: AsyncCommand {
       var called: Bool = false
@@ -45,7 +52,7 @@ final class ApplicationTests: XCTestCase {
     app.asyncCommands.use(command, as: "call")
 
     // Act
-    try await app.execute(arguments: ["<endpoint>", "call"])
+    try await app.cliKit()
 
     // Assert
     let actual = await command.called

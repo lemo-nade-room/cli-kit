@@ -13,12 +13,12 @@ let package = Package(
       targets: ["CLIKit"])
   ],
   dependencies: [
-    // Console Kit
-    .package(url: "https://github.com/vapor/console-kit.git", from: "4.14.1"),
+    // Vapor
+    .package(url: "https://github.com/vapor/vapor.git", from: "4.91.1"),
     // Fluent Kit
-    .package(url: "https://github.com/vapor/fluent-kit.git", from: "1.45.1"),
-    // Swift NIO
-    .package(url: "https://github.com/apple/swift-nio.git", from: "2.62.0"),
+    .package(url: "https://github.com/vapor/fluent.git", from: "4.9.0"),
+    // 🪶 Fluent driver for SQLite.
+    .package(url: "https://github.com/vapor/fluent-sqlite-driver.git", from: "4.0.0"),
   ],
   targets: [
     // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -26,14 +26,15 @@ let package = Package(
     .target(
       name: "CLIKit",
       dependencies: [
-        .product(name: "ConsoleKit", package: "console-kit"),
-        .product(name: "FluentKit", package: "fluent-kit"),
-        .product(name: "NIOCore", package: "swift-nio"),
-        .product(name: "NIOPosix", package: "swift-nio"),
+        .product(name: "Vapor", package: "vapor"),
+        .product(name: "Fluent", package: "fluent"),
       ]
     ),
     .testTarget(
       name: "CLIKitTests",
-      dependencies: ["CLIKit"]),
+      dependencies: [
+        "CLIKit",
+        .product(name: "FluentSQLiteDriver", package: "fluent-sqlite-driver"),
+      ]),
   ]
 )
