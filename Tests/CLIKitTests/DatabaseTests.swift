@@ -49,10 +49,10 @@ final class DatabaseTests: XCTestCase {
       }
     }
 
-    app.asyncCommands.use(TodoSearchCommand(), as: "search")
-
     // Act
-    try await app.cliKit()
+    try await app.cliKit { app in
+      app.asyncCommands.use(TodoSearchCommand(), as: "search")
+    }
 
     // Assert
     XCTAssertEqual(console.outputted[0].text.fragments[0].string, "Alice: My name is Alice!")

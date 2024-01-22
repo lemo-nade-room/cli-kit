@@ -21,11 +21,16 @@ final class ApplicationTests: XCTestCase {
       }
     }
 
+    func configure(_ app: Application) async throws {
+
+    }
+
     let command = CallCommand()
-    app.commands.use(command, as: "call")
 
     // Act
-    try await app.cliKit()
+    try await app.cliKit { app in
+      app.commands.use(command, as: "call")
+    }
 
     // Assert
     XCTAssertTrue(command.called)
@@ -49,10 +54,11 @@ final class ApplicationTests: XCTestCase {
     }
 
     let command = CallCommand()
-    app.asyncCommands.use(command, as: "call")
 
     // Act
-    try await app.cliKit()
+    try await app.cliKit { app in
+      app.asyncCommands.use(command, as: "call")
+    }
 
     // Assert
     let actual = await command.called

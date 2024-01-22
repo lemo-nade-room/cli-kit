@@ -1,7 +1,19 @@
 import Vapor
 
 extension Vapor.Application {
-  public func cliKit() async throws {
+  public func cliKit(configure: (Application) async throws -> Void) async throws {
+    commands.defaultCommand = nil
+    commands.commands = [:]
+    asyncCommands.defaultCommand = nil
+    asyncCommands.commands = [:]
+
+    do {
+      try await configure(self)
+    } catch {
+      logger.report(error: error)
+      throw error
+    }
+
     let combinedCommands = AsyncCommands(
       commands: self.asyncCommands.commands.merging(self.commands.commands) { $1 },
       defaultCommand: self.asyncCommands.defaultCommand ?? self.commands.defaultCommand,

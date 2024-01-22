@@ -27,11 +27,10 @@ final class SwiftCommandTests: XCTestCase {
       }
     }
 
-    let command = CreateFileCommand()
-    app.asyncCommands.use(command, as: "create-file")
-
     // Act
-    try await app.cliKit()
+    try await app.cliKit { app in
+      app.asyncCommands.use(CreateFileCommand(), as: "create-file")
+    }
 
     // Assert
     let fileManager = FileManager()
