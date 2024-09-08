@@ -1,5 +1,5 @@
-import XCTest
 @testable import CLIKit
+import XCTest
 
 final class CLIKitTests: XCTestCase {
     func testExample() throws {

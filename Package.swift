@@ -1,26 +1,27 @@
 // swift-tools-version: 5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
+import Foundation
 import PackageDescription
 
 let package = Package(
     name: "cli-kit",
     platforms: [.macOS(.v14)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "CLIKit",
-            targets: ["CLIKit"]),
+            targets: ["CLIKit"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-testing.git", from: "0.10.0"),
+        .package(url: "https://github.com/realm/SwiftLint.git", branch: "main"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "CLIKit",
-            swiftSettings: swiftSettings
+            swiftSettings: swiftSettings,
+            plugins: swiftLintPlugins
         ),
         .testTarget(
             name: "CLIKitTests",
@@ -28,7 +29,8 @@ let package = Package(
                 "CLIKit",
                 .product(name: "Testing", package: "swift-testing"),
             ],
-            swiftSettings: swiftSettings
+            swiftSettings: swiftSettings,
+            plugins: swiftLintPlugins
         ),
     ]
 )
@@ -37,3 +39,19 @@ var swiftSettings: [SwiftSetting] { [
     .enableUpcomingFeature("DisableOutwardActorInference"),
     .enableExperimentalFeature("StrictConcurrency"),
 ] }
+
+var swiftLintPlugins: [Target.PluginUsage] {
+    guard Environment.enableSwiftLint else { return [] }
+    return [
+        .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLint")
+    ]
+}
+
+enum Environment {
+    static func get(_ key: String) -> String? {
+        ProcessInfo.processInfo.environment[key]
+    }
+    static var enableSwiftLint: Bool {
+        Self.get("SWIFTLINT") == "true"
+    }
+}
