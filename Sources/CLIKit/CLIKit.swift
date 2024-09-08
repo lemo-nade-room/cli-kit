@@ -6,6 +6,7 @@ import Logging
 /// `ConsoleKit`で作成した`AsyncCommand`を実行するサービス
 ///
 /// 作成した`AsyncCommand`を`use`メソッドで登録後、`run`メソッドで実行を行う
+/// sqliteURLを指定することでSQLiteデータベースをFluent ORMで使用できる。
 /// ```swift
 /// let sqliteURL = FileManager()
 ///   .homeDirectoryForCurrentUser
@@ -13,7 +14,6 @@ import Logging
 /// var cli = CLIKitService(help: "サンプルCLI")
 /// cli.use(AddCommand(), as: "add")
 /// cli.use(CommitCommand(), as: "commit")
-/// cli.migrations
 /// cli.migrations.add(CommitMigration())
 /// await cli.run()
 /// ```
