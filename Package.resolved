@@ -1,5 +1,5 @@
 {
-  "originHash" : "1cb588882ffa781605c50221ee66b558c421f27780fb4fb87a0f9316707de6c0",
+  "originHash" : "0e0c6ff85ba6eb953e3782bc08a8cfff3215a5047597ba294e6002c9aed58d54",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -143,6 +143,15 @@
       "state" : {
         "revision" : "41982a3656a71c768319979febd796c6fd111d5c",
         "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swift-async-algorithms",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-async-algorithms",
+      "state" : {
+        "revision" : "6ae9a051f76b81cc668305ceed5b0e0a7fd93d20",
+        "version" : "1.0.1"
       }
     },
     {
@@ -296,6 +305,15 @@
       "state" : {
         "revision" : "69d59cfc76e5daf498ca61f5af409f594768eef9",
         "version" : "0.10.0"
+      }
+    },
+    {
+      "identity" : "swiftcommand",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Zollerboy1/SwiftCommand.git",
+      "state" : {
+        "revision" : "4a0ea7695a17c4e4053e15814110b5086c3c2ceb",
+        "version" : "1.4.1"
       }
     },
     {
