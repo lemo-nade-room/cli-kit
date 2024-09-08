@@ -59,7 +59,6 @@ let sqliteURL = FileManager()
 var cli = CLIKitService(help: "サンプルCLI")
 cli.use(AddCommand(), as: "add")
 cli.use(CommitCommand(), as: "commit")
-cli.migrations
 cli.migrations.add(CommitMigration())
 await cli.run()
 ```
