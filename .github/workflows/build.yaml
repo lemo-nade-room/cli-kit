@@ -1,0 +1,20 @@
+name: Swift Build
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/build.yaml'
+      - '**.swift'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v4
+        with:
+          key: swift-build-package-resolved-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Package.resolved') }}
+          path: .build
+      - uses: swift-actions/setup-swift@v2
+      - run: swift build
