@@ -45,6 +45,12 @@ extension CommandContext {
         }
     }
 
+    public var threadPool: NIOThreadPool? {
+        get async {
+            await storage.get(NIOThreadPool.self)
+        }
+    }
+
     func initDatabase(sqliteURL: URL, migrations: Migrations, migrationLogLevel: Logger.Level) async throws {
         let logger = await logger
         let eventLoopGroup = await eventLoopGroup
@@ -54,7 +60,6 @@ extension CommandContext {
         let databases = Databases(threadPool: threadPool, on: eventLoopGroup)
         databases.use(.sqlite(.file(sqliteURL.absoluteString)), as: .sqlite)
         await storage.set(key: Logger.self, logger)
-        await storage.set(key: MultiThreadedEventLoopGroup.self, eventLoopGroup)
         await storage.set(key: NIOThreadPool.self, threadPool)
         await storage.set(key: Databases.self, databases)
 
@@ -88,9 +93,12 @@ extension CommandContext {
         }
     }
 
-    func shutdown() async {
+    func shutdown() async throws {
         if let databases = await databases {
             await databases.shutdownAsync()
+        }
+        if let threadPool = await threadPool {
+            try await threadPool.shutdownGracefully()
         }
     }
 }

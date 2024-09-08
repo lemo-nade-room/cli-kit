@@ -69,7 +69,11 @@ public struct CLIKitService: Sendable {
         } catch let error {
             console.error("\(error)")
         }
-        await context.shutdown()
+        do {
+            try await context.shutdown()
+        } catch let error {
+            console.error("\(error)")
+        }
     }
 
     /// AsyncCommandを登録する
