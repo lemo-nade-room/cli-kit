@@ -15,7 +15,6 @@ extension CommandContext {
         get async {
             guard
                 let databases = await storage.get(Databases.self),
-                let eventLoopGroup = await eventLoopGroup,
                 let db = await databases.database(logger: logger, on: eventLoopGroup.any())
             else {
                 fatalError("データベースが初期化されていません。CLIKitService(sqlitePath: \"...\")で初期化してください")
@@ -40,32 +39,32 @@ extension CommandContext {
         }
     }
 
-    public var eventLoopGroup: MultiThreadedEventLoopGroup? {
+    public var eventLoopGroup: MultiThreadedEventLoopGroup {
         get async {
-            await storage.get(MultiThreadedEventLoopGroup.self)
+            await storage.get { .singleton }
         }
     }
 
     func initDatabase(sqliteURL: URL, migrations: Migrations, migrationLogLevel: Logger.Level) async throws {
-       let logger = await logger
-       let eventLoopGroup: MultiThreadedEventLoopGroup = .singleton
-       let threadPool: NIOThreadPool = .init(numberOfThreads: System.coreCount)
-       try await threadPool.shutdownGracefully()
-       threadPool.start()
-       let databases = Databases(threadPool: threadPool, on: eventLoopGroup)
-       databases.use(.sqlite(.file(sqliteURL.absoluteString)), as: .sqlite)
-       await storage.set(key: Logger.self, logger)
-       await storage.set(key: MultiThreadedEventLoopGroup.self, eventLoopGroup)
-       await storage.set(key: NIOThreadPool.self, threadPool)
-       await storage.set(key: Databases.self, databases)
+        let logger = await logger
+        let eventLoopGroup = await eventLoopGroup
+        let threadPool: NIOThreadPool = .init(numberOfThreads: System.coreCount)
+        try await threadPool.shutdownGracefully()
+        threadPool.start()
+        let databases = Databases(threadPool: threadPool, on: eventLoopGroup)
+        databases.use(.sqlite(.file(sqliteURL.absoluteString)), as: .sqlite)
+        await storage.set(key: Logger.self, logger)
+        await storage.set(key: MultiThreadedEventLoopGroup.self, eventLoopGroup)
+        await storage.set(key: NIOThreadPool.self, threadPool)
+        await storage.set(key: Databases.self, databases)
 
-       try await autoMigrate(
-           databases: databases,
-           migrations: migrations,
-           on: eventLoopGroup.any(),
-           migrationLogLevel: migrationLogLevel
-       )
-   }
+        try await autoMigrate(
+            databases: databases,
+            migrations: migrations,
+            on: eventLoopGroup.any(),
+            migrationLogLevel: migrationLogLevel
+        )
+    }
 
     func autoMigrate(
         databases: Databases,
