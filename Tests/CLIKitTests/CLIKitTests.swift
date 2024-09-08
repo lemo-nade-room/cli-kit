@@ -1,7 +1,7 @@
 import XCTest
-@testable import cli_kit
+@testable import CLIKit
 
-final class cli_kitTests: XCTestCase {
+final class CLIKitTests: XCTestCase {
     func testExample() throws {
         // XCTest Documentation
         // https://developer.apple.com/documentation/xctest
