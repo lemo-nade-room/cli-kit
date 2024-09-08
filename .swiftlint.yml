@@ -54,6 +54,8 @@ nesting:
   type_level:
     warning: 3
     error: 5
+disabled_rules:
+  function_body_length
 analyzer_rules:
   - unused_declaration
   - capture_variable
