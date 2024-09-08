@@ -16,9 +16,18 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "CLIKit"),
+            name: "CLIKit",
+            swiftSettings: swiftSettings
+        ),
         .testTarget(
             name: "CLIKitTests",
-            dependencies: ["CLIKit"]),
+            dependencies: ["CLIKit"],
+            swiftSettings: swiftSettings
+        ),
     ]
 )
+
+var swiftSettings: [SwiftSetting] { [
+    .enableUpcomingFeature("DisableOutwardActorInference"),
+    .enableExperimentalFeature("StrictConcurrency"),
+] }
