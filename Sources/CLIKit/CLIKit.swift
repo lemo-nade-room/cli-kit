@@ -15,6 +15,7 @@ public struct CLIKitService: Sendable {
     public var console: any Console
     public var input: CommandInput
     public var asyncCommands: AsyncCommands
+    public var sqlitePath: String?
 
     /// イニシャライザ
     ///
@@ -27,12 +28,14 @@ public struct CLIKitService: Sendable {
         help: String = "",
         console: any Console = Terminal(),
         input: CommandInput = .init(arguments: ProcessInfo.processInfo.arguments),
-        asyncCommands: AsyncCommands = AsyncCommands(enableAutocomplete: true)
+        asyncCommands: AsyncCommands = AsyncCommands(enableAutocomplete: true),
+        sqlitePath: String? = nil
     ) {
         self.help = help
         self.console = console
         self.input = input
         self.asyncCommands = asyncCommands
+        self.sqlitePath = sqlitePath
     }
 
     /// CLIを実行する
