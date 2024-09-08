@@ -10,7 +10,7 @@ CLIKitは、Swiftで簡単にCLI（コマンドラインインターフェース
         <img src="https://design.vapor.codes/images/mitlicense.svg" alt="MIT License">
     </a>
     <a href="https://github.com/lemo-nade-room/cli-kit/actions/workflows/test.yaml">
-        <img src="https://img.shields.io/github/actions/workflow/status/lemo-nade-room/cli-kit/test.yaml?branch=main&style=plastic&logo=github&label=tests&logoColor=%23ccc" alt="Continuous Integration">
+        <img src="https://img.shields.io/github/actions/workflow/status/lemo-nade-room/cli-kit/test.yaml?event=push&style=plastic&logo=github&label=tests&logoColor=%23ccc" alt="Continuous Integration">
     </a>
     <a href="https://swift.org">
         <img src="https://design.vapor.codes/images/swift510up.svg" alt="Swift 5.10+">
