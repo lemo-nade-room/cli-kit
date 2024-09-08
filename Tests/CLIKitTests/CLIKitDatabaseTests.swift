@@ -33,7 +33,7 @@ import Testing
         }
 
         let console = TestConsole()
-        let sqliteURL = FileManager().homeDirectoryForCurrentUser.appending(path: "test.sqlite")
+        let sqliteURL = FileManager().homeDirectoryForCurrentUser.appendingPathComponent("test.sqlite")
         func removeSQLiteFile() {
             do { try FileManager().removeItem(at: sqliteURL) } catch {}
         }
