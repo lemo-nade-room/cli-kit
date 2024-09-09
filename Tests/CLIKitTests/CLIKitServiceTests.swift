@@ -2,7 +2,7 @@ import CLIKit
 import ConsoleKit
 import Testing
 
-@Suite struct CLIKitServiceTests {
+@Suite struct CLITests {
     @Test func サンプル() async throws {
         // Arrange
         struct TestCommand: AsyncCommand {
@@ -17,7 +17,7 @@ import Testing
         }
 
         let console = TestConsole()
-        var sut = CLIKitService(
+        var sut = CLI(
             console: console,
             input: CommandInput(arguments: ["git", "commit", "-m", "hello"])
         )

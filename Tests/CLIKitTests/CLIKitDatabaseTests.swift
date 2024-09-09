@@ -39,7 +39,7 @@ import Testing
         }
         removeSQLiteFile()
         defer { removeSQLiteFile() }
-        var sut = CLIKitService(
+        var sut = CLI(
             console: console,
             input: CommandInput(arguments: ["cli", "save"]),
             sqliteURL: sqliteURL
