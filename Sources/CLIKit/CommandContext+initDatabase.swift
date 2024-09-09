@@ -17,7 +17,7 @@ extension CommandContext {
                 let databases = await storage.get(Databases.self),
                 let db = await databases.database(logger: logger, on: eventLoopGroup.any())
             else {
-                fatalError("データベースが初期化されていません。CLIKitService(sqlitePath: \"...\")で初期化してください")
+                fatalError("データベースが初期化されていません。CLI(sqlitePath: \"...\")で初期化してください")
             }
             return db
         }

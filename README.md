@@ -56,7 +56,7 @@ dependencies: [
 let sqliteURL = FileManager()
   .homeDirectoryForCurrentUser
   .appending(path: "file.sqlite")
-var cli = CLIKitService(help: "サンプルCLI")
+var cli = CLI(help: "サンプルCLI")
 cli.use(AddCommand(), as: "add")
 cli.use(CommitCommand(), as: "commit")
 cli.migrations.add(CommitMigration())

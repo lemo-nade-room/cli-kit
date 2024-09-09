@@ -11,13 +11,13 @@ import Logging
 /// let sqliteURL = FileManager()
 ///   .homeDirectoryForCurrentUser
 ///   .appending(path: "file.sqlite")
-/// var cli = CLIKitService(help: "サンプルCLI")
+/// var cli = CLI(help: "サンプルCLI")
 /// cli.use(AddCommand(), as: "add")
 /// cli.use(CommitCommand(), as: "commit")
 /// cli.migrations.add(CommitMigration())
 /// await cli.run()
 /// ```
-public struct CLIKitService: Sendable {
+public struct CLI: Sendable {
     public var help: String
     public var console: any Console
     public var input: CommandInput
