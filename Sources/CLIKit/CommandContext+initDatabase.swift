@@ -59,7 +59,6 @@ extension CommandContext {
         threadPool.start()
         let databases = Databases(threadPool: threadPool, on: eventLoopGroup)
         databases.use(.sqlite(.file(sqliteURL.absoluteString)), as: .sqlite)
-        await storage.set(key: Logger.self, logger)
         await storage.set(key: NIOThreadPool.self, threadPool)
         await storage.set(key: Databases.self, databases)
 
