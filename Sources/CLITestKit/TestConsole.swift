@@ -133,12 +133,3 @@ extension ConsoleTextFragment: @retroactive Hashable {
         hasher.combine(style)
     }
 }
-
-extension ConsoleText: @retroactive Hashable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.fragments == rhs.fragments
-    }
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(fragments)
-    }
-}
