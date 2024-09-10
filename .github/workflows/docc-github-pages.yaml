@@ -28,14 +28,22 @@ jobs:
 
       - uses: swift-actions/setup-swift@v2
 
-      - name: Build DocC
+      - name: Build DocC for CLIKit
         run: |
-          swift package --allow-writing-to-directory ./docs \
+          swift package --allow-writing-to-directory ./docs/CLIKit \
             generate-documentation --target CLIKit \
             --disable-indexing \
             --transform-for-static-hosting \
-            --hosting-base-path cli-kit \
-            --output-path ./docs
+            --hosting-base-path cli-kit/CLIKit \
+            --output-path ./docs/CLIKit
+      - name: Build DocC for CLITestKit
+        run: |
+          swift package --allow-writing-to-directory ./docs/CLITestKit \
+            generate-documentation --target CLITestKit \
+            --disable-indexing \
+            --transform-for-static-hosting \
+            --hosting-base-path cli-kit/CLITestKit \
+            --output-path ./docs/CLITestKit
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
