@@ -45,6 +45,7 @@ let package = Package(
             dependencies: [
                 "CLIKit",
                 .product(name: "Testing", package: "swift-testing"),
+                .target(name: "CLITestKit"),
             ],
             swiftSettings: swiftSettings,
             plugins: swiftLintPlugins

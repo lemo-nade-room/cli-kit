@@ -1,4 +1,5 @@
 import CLIKit
+import CLITestKit
 import ConsoleKit
 import Testing
 
@@ -27,6 +28,8 @@ import Testing
         await sut.run()
 
         // Assert
-        #expect(console.testOutputQueue == ["message: hello\n"])
+        #expect(console.records == [
+            .output(text: "message: hello", newLine: true, style: .plain),
+        ])
     }
 }
