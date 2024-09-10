@@ -1,4 +1,5 @@
 import CLIKit
+import CLITestKit
 import ConsoleKit
 import Fluent
 import Foundation
@@ -51,7 +52,9 @@ import Testing
         await sut.run()
 
         // Assert
-        #expect(console.testOutputQueue == ["key: Hello, value: World\n"])
+        #expect(console.records == [
+            .output(text: "key: Hello, value: World", newLine: true, style: .plain),
+        ])
     }
 
     struct StoreMigration: AsyncMigration {

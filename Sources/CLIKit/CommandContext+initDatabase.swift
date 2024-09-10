@@ -52,7 +52,6 @@ extension CommandContext {
     }
 
     func initDatabase(sqliteURL: URL, migrations: Migrations, migrationLogLevel: Logger.Level) async throws {
-        let logger = await logger
         let eventLoopGroup = await eventLoopGroup
         let threadPool: NIOThreadPool = .init(numberOfThreads: System.coreCount)
         try await threadPool.shutdownGracefully()

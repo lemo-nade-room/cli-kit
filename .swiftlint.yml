@@ -55,7 +55,8 @@ nesting:
     warning: 3
     error: 5
 disabled_rules:
-  function_body_length
+  - function_body_length
+  - cyclomatic_complexity
 analyzer_rules:
   - unused_declaration
   - capture_variable
