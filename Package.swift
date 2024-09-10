@@ -12,6 +12,10 @@ let package = Package(
             name: "CLIKit",
             targets: ["CLIKit"]
         ),
+        .library(
+            name: "CLITestKit",
+            targets: ["CLITestKit"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-testing.git", from: "0.10.0"),
@@ -40,6 +44,23 @@ let package = Package(
             name: "CLIKitTests",
             dependencies: [
                 "CLIKit",
+                .product(name: "Testing", package: "swift-testing"),
+            ],
+            swiftSettings: swiftSettings,
+            plugins: swiftLintPlugins
+        ),
+        .target(
+            name: "CLITestKit",
+            dependencies: [
+                .target(name: "CLIKit"),
+            ],
+            swiftSettings: swiftSettings,
+            plugins: swiftLintPlugins
+        ),
+        .testTarget(
+            name: "CLITestKitTests",
+            dependencies: [
+                "CLITestKit",
                 .product(name: "Testing", package: "swift-testing"),
             ],
             swiftSettings: swiftSettings,
