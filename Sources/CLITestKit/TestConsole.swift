@@ -81,7 +81,7 @@ public final class TestConsole: Console, @unchecked Sendable {
     }
 }
 
-extension ConsoleColor: @retroactive Hashable {
+extension ConsoleColor: Hashable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         switch (lhs, rhs) {
         case (.black, .black): true
@@ -110,7 +110,7 @@ extension ConsoleColor: @retroactive Hashable {
     }
 }
 
-extension ConsoleStyle: @retroactive Hashable {
+extension ConsoleStyle: Hashable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.isBold == rhs.isBold &&
         lhs.background == rhs.background &&
@@ -123,7 +123,7 @@ extension ConsoleStyle: @retroactive Hashable {
     }
 }
 
-extension ConsoleTextFragment: @retroactive Hashable {
+extension ConsoleTextFragment: Hashable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.string == rhs.string &&
         lhs.style == rhs.style
