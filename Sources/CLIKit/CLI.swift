@@ -1,7 +1,10 @@
 import ConsoleKit
+import Dependencies
 import Fluent
 import Foundation
 import Logging
+import NIOCore
+import NIOPosix
 
 /// `ConsoleKit`で作成した`AsyncCommand`を実行するサービス
 ///
@@ -55,24 +58,41 @@ public struct CLI: Sendable {
     }
 
     /// CLIを実行する
-    public func run() async {
+    public func run() async throws {
         let context = CommandContext(console: console, input: input)
+        let eventLoopGroup = MultiThreadedEventLoopGroup.singleton
+        let threadPool = try await prepareThreadPool()
+        let logger = Logger(label: "CLIKit")
+        let databases = Databases(threadPool: threadPool, on: eventLoopGroup)
+
+        if let sqliteURL {
+            databases.use(.sqlite(.file(sqliteURL.absoluteString)), as: .sqlite)
+            try await autoMigrate(
+                databases: databases,
+                on: eventLoopGroup.any(),
+                logger: logger,
+                migrations: migrations,
+                migrationLogLevel: migrationLogLevel
+            )
+        }
+
         do {
-            if let sqliteURL {
-                try await context.initDatabase(
-                    sqliteURL: sqliteURL,
-                    migrations: migrations,
-                    migrationLogLevel: migrationLogLevel
-                )
+            try await withDependencies {
+                $0.databases = databases
+                $0.eventLoopGroup = eventLoopGroup
+                $0.threadPool = threadPool
+                $0.logger = logger
+                $0.httpClient = .shared
+            } operation: {
+                try await console.run(asyncCommandGroup, with: context)
             }
-            try await console.run(asyncCommandGroup, with: context)
         } catch let error {
             console.error("\(error)")
         }
+
         do {
-            try await context.shutdown()
-        } catch let error {
-            console.error("\(error)")
+            await databases.shutdownAsync()
+            try await threadPool.shutdownGracefully()
         }
     }
 

@@ -1,6 +1,7 @@
 import CLIKit
 import CLITestKit
 import ConsoleKit
+import Dependencies
 import Fluent
 import Foundation
 import Testing
@@ -25,10 +26,11 @@ import Testing
 
         struct TestCommand: AsyncCommand {
             struct Signature: CommandSignature {}
+            @Dependency(\.db) var db
             let help = "save command"
             func run(using context: CommandContext, signature: Signature) async throws {
-                try await Store(key: "Hello", value: "World").create(on: context.db)
-                let all = try await Store.query(on: context.db).all()
+                try await Store(key: "Hello", value: "World").create(on: db)
+                let all = try await Store.query(on: db).all()
                 context.console.output("\(all.map(\.description).joined())", newLine: true)
             }
         }
@@ -49,7 +51,7 @@ import Testing
         sut.migrations.add(StoreMigration())
 
         // Act
-        await sut.run()
+        try await sut.run()
 
         // Assert
         #expect(console.records == [
