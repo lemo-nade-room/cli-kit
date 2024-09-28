@@ -25,7 +25,7 @@ import Testing
         sut.use(TestCommand(), as: "commit")
 
         // Act
-        await sut.run()
+        try await sut.run()
 
         // Assert
         #expect(console.records == [
