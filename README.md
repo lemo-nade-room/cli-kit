@@ -60,7 +60,7 @@ var cli = CLI(help: "サンプルCLI")
 cli.use(AddCommand(), as: "add")
 cli.use(CommitCommand(), as: "commit")
 cli.migrations.add(CommitMigration())
-await cli.run()
+try await cli.run()
 ```
 
 ## ライセンス
