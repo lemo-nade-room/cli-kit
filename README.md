@@ -3,6 +3,9 @@
 CLIKitは、Swiftで簡単にCLI（コマンドラインインターフェース）ツールを作成するためのライブラリです。`ConsoleKit`や`Fluent`などを活用して、非同期のコマンド実行やデータベース操作をシンプルに実装できます。
 
 <p align="center">
+    <a href="https://github.com/lemo-nade-room/cli-kit/actions/workflows/test.yaml">
+        <img src="https://github.com/lemo-nade-room/cli-kit/actions/workflows/test.yaml/badge.svg" alt="Testing Status">
+    </a>
     <a href="https://lemo-nade-room.github.io/cli-kit/documentation/clikit">
         <img src="https://design.vapor.codes/images/readthedocs.svg" alt="Documentation">
     </a>
