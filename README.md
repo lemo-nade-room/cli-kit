@@ -6,7 +6,7 @@ CLIKitは、Swiftで簡単にCLI（コマンドラインインターフェース
     <a href="https://github.com/lemo-nade-room/cli-kit/actions/workflows/test.yaml">
         <img src="https://github.com/lemo-nade-room/cli-kit/actions/workflows/test.yaml/badge.svg" alt="Testing Status">
     </a>
-    <a href="https://lemo-nade-room.github.io/cli-kit/documentation/clikit">
+    <a href="https://lemo-nade-room.github.io/cli-kit/">
         <img src="https://design.vapor.codes/images/readthedocs.svg" alt="Documentation">
     </a>
     <a href="LICENSE">
